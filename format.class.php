@@ -101,6 +101,7 @@ class Format
         foreach($arr as $key => $val)
         {
             $index++;
+            if(gettype($val)=='object') $val=(array)$val;
             if(is_array($val))
             {
                 $output .= Format::keyValue($val, $equal, $wrap, $delim, $encode, $key);
@@ -130,6 +131,7 @@ class Format
         // Удаляем вложенные массивы
         foreach($arr as $key => $val)
         {
+            if(gettype($val)=='object') $val=(array)$val;
             if(is_array($val))
             {
                 unset($arr[$key]);
