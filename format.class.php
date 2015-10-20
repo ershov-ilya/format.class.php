@@ -10,6 +10,10 @@
 
 class Format
 {
+    private static $options=array(
+        'json'  => JSON_UNESCAPED_UNICODE
+    );
+
     static public function parse($arr, $format){
         if(!empty($arr['response'])){
             preg_match('/^(([0-9]{0,4})\s){0,1}(.*)/',$arr['response'],$matches);
@@ -41,6 +45,10 @@ class Format
             default:
                 return Format::JSON($arr);
         }
+    }
+    static public function set($format, $options=0)
+    {
+        Format::$options[$format]=$options;
     }
 
     static private function generate()
@@ -90,7 +98,8 @@ class Format
     }
 
     static public function JSON($arr){
-        return json_encode($arr);
+
+        return json_encode($arr, Format::$options['json']);
     }
 
     static public function keyValue($arr, $equal=' ', $wrap='', $delim="\n", $encode=false, $namespace=''){
